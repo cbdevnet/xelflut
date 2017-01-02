@@ -34,6 +34,8 @@ None as of yet. Just run the resulting binary.
 
 Run `./xelflut -h` for some info on what you can do.
 
+Press `q` to quit.
+
 # Protocol
 
 Lines of ASCII text commands separated by `\n` via TCP on port `3141`, unless you
