@@ -36,7 +36,8 @@ Run `./xelflut -h` for some info on what you can do.
 
 # Protocol
 
-Lines of ASCII text commands separated by `\n`.
+Lines of ASCII text commands separated by `\n` via TCP on port `3141`, unless you
+configure it differently.
 
 
 Send `SIZE` and the server responds with `SIZE WIDTH HEIGHT`
