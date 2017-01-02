@@ -6,7 +6,7 @@ Based on the idea of [pixelflut](https://cccgoe.de/wiki/Pixelflut), as seen at E
 
 Written directly against XRender so it should probably be pretty fast.
 
-Version numbers approximate &Pi;.
+Version numbers approximate &pi;.
 
 ## The name
 
