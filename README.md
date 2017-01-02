@@ -34,7 +34,7 @@ None as of yet. Just run the resulting binary.
 
 Run `./xelflut -h` for some info on what you can do.
 
-Press `q` to quit.
+Within the window, press `q` to quit or `c` to clear the canvas.
 
 # Protocol
 
