@@ -7,17 +7,17 @@ XRenderColor args_color(char* raw){
 	uint32_t bytes = strtoul(raw, NULL, 16);
 
 	if(strlen(raw) == 8){
-		color.alpha = (bytes & mask) << 8 | 0xFF;
+		color.alpha = (bytes & mask) << 8 | (bytes & mask);
 		bytes >>= 8;
 	}
 
-	color.blue = (bytes & mask) << 8 | 0xFF;
+	color.blue = (bytes & mask) << 8 | (bytes & mask);
 	bytes >>= 8;
 
-	color.green = (bytes & mask) << 8 | 0xFF;
+	color.green = (bytes & mask) << 8 | (bytes & mask);
 	bytes >>= 8;
 
-	color.red = (bytes & mask) << 8 | 0xFF;
+	color.red = (bytes & mask) << 8 | (bytes & mask);
 	bytes >>= 8;
 
 	//fprintf(stderr, "Read color r:%X g:%X b:%X a:%X\n", color.red, color.green, color.blue, color.alpha);
