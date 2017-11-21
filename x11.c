@@ -1,4 +1,5 @@
 int x11_init(){
+	int status;
 	Window root;
 	XSetWindowAttributes window_attributes;
 	Atom wm_state_fullscreen;
@@ -14,6 +15,11 @@ int x11_init(){
 
 	if(!(x11.display)){
 		fprintf(stderr, "Failed to open display\n");
+		return -1;
+	}
+
+	if(!XRenderQueryExtension(x11.display, &status, &status)){
+		fprintf(stderr, "Missing XRender support on the display\n");
 		return -1;
 	}
 
