@@ -78,6 +78,7 @@ int tcp_listener(char* bindhost, char* port){
 			continue;
 		}
 
+		yes = config.exclusive ? 1 : 0;
 		if(setsockopt(fd, IPPROTO_IPV6, IPV6_V6ONLY, (void*)&yes, sizeof(yes)) < 0){
 			fprintf(stderr, "Failed to set IPV6_V6ONLY on socket for %s port %s: %s\n", bindhost, port, strerror(errno));
 		}
