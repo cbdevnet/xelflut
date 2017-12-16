@@ -111,7 +111,7 @@ int client_process(client* client, bool recv_data){
 
 	if(recv_data){
 		//read data
-		bytes = recv(client->fd, client->data, sizeof(client->data) - client->data_offset, 0);
+		bytes = recv(client->fd, client->data + client->data_offset, sizeof(client->data) - client->data_offset, 0);
 
 		//check for errors
 		if(bytes < 0){
