@@ -231,7 +231,7 @@ void x11_handle(){
 
 	if(exposed){
 		//composite pixmap onto window
-		XRenderComposite(x11.display, PictOpOver, x11.canvas_handle, None, x11.window_handle, 0, 0, 0, 0, 0, 0, x11.width, x11.height);
+		XRenderComposite(x11.display, PictOpSrc, x11.canvas_handle, None, x11.window_handle, 0, 0, 0, 0, 0, 0, x11.width, x11.height);
 	}
 }
 
