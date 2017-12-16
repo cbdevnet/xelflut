@@ -43,6 +43,7 @@ int client_disconnect(client* disc){
 		.fd = -1
 	};
 
+	config.clients--;
 	close(disc->fd);
 	*disc = empty_client;
 
@@ -75,6 +76,7 @@ int client_accept(int listen_fd){
 	clients.entries[position] = empty_client;
 
 	clients.entries[position].fd = accept(listen_fd,(struct sockaddr*) &clients.entries[position].peer, &clients.entries[position].peer_len);
+	config.clients++;
 
 	if(clients.entries[position].fd < 0){
 		perror("accept");

@@ -141,6 +141,11 @@ void x11_handle(){
 	XEvent event;
 	char pressed_key;
 	bool reconfigured = false, exposed = false;
+	XTransform transform = {{
+		{XDoubleToFixed(1), XDoubleToFixed(0), XDoubleToFixed(0)},
+		{XDoubleToFixed(0), XDoubleToFixed(1), XDoubleToFixed(0)},
+		{XDoubleToFixed(0), XDoubleToFixed(0), XDoubleToFixed(1)}
+	}};
 	//handle events
 	while(XPending(x11.display)){
 		XNextEvent(x11.display, &event);
@@ -199,7 +204,11 @@ void x11_handle(){
 	XFlush(x11.display);
 
 	if(reconfigured){
-		fprintf(stderr, "Window configured to %dx%d\n", x11.width, x11.height);
+
+		//update transform scale
+		transform.matrix[2][2] = XDoubleToFixed(min(x11.width / (double) config.width, x11.height / (double) config.height));
+		fprintf(stderr, "Window configured to %dx%d, image scale %f\n", x11.width, x11.height, min(x11.width / (double) config.width, x11.height / (double) config.height));
+		XRenderSetPictureTransform(x11.display, x11.canvas_handle, &transform);
 	}
 
 	if(exposed){
