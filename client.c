@@ -129,7 +129,7 @@ int client_process(client* client, bool recv_data){
 	while(client->data_offset > 3 && memchr(client->data, '\n', client->data_offset)){
 		if(!strncmp(client->data, "PX ", 3)){
 			//check pixel limit
-			if(!config.unsafe && client->submits >= config.frame_limit){
+			if(config.limit_handling != none && !config.unsafe && client->submits >= config.frame_limit){
 				if(config.limit_handling == ignore){
 					goto line_handled;
 				}

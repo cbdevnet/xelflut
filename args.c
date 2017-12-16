@@ -64,6 +64,9 @@ int args_parse(int argc, char** argv){
 					else if(!strcmp(argv[u + 1], "disconnect")){
 						config.limit_handling = disconnect;
 					}
+					else if(!strcmp(argv[u + 1], "none")){
+						config.limit_handling = none;
+					}
 					else{
 						config.limit_handling = limit;
 					}

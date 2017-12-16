@@ -8,7 +8,7 @@ int usage(char* fn){
 	printf("-l <limit>\tPixels a client may set per frame (Default 50)\n");
 	printf("-f <framerate>\tMaximum framerate (Default 25)\n");
 	printf("-d <width>x<height>\tThe canvas size (Default 800x600)\n");
-	printf("-e <enforcer>\tSelect a limit enforcing handler (limit (Default), ignore or disconnect)\n");
+	printf("-e <enforcer>\tSelect a limit enforcing handler (limit (Default), ignore, disconnect or none)\n");
 	printf("-u\t\tUnsafe mode - disregard client checks and limits\n");
 	printf("-x\t\tOnly accept IPv4/6 clients as indicated by bindhost\n");
 	printf("-w\t\tDo not fullscreen the window\n");

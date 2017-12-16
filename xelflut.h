@@ -37,7 +37,8 @@ struct /*_XELFLUT_CONF*/ {
 	enum {
 		limit = 0,
 		ignore,
-		disconnect
+		disconnect,
+		none
 	} limit_handling;
 	unsigned width;
 	unsigned height;

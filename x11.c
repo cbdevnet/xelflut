@@ -203,8 +203,7 @@ void x11_handle(){
 	}
 
 	if(exposed){
-		//clear window
-		//FIXME this seems to leave some areas
+		//clear window //FIXME is this even needed (ie, is the image transparent?)
 		//XClearWindow(x11.display, x11.main);
 		XRenderFillRectangle(x11.display, PictOpOver, x11.window_handle, &x11.background, 0, 0, x11.width, x11.height);
 
