@@ -49,7 +49,9 @@ Within the window, press `q` to quit or `c` to clear the canvas.
 
 By default, clients are limited to 50 pixels per frame (to change this, use the `-l` argument),
 25 frames are rendered every second (configurable with `-f`). Clients exceeding the limits will
-be disconnected, which may be changed to just ignoring additional pixels via the `-n` option.
+be slowed down by default. This behaviour can be changed to one of the enforcement policies
+`disconnect` (Disconnect clients exceeding the limits) or `ignore` (Ignore additional pixels until
+the next frame) with the `-e <enforcer>` option.
 Clients are allowed only one connection per host (though this can be circumvented by reasonably
 clever attackers). All limits and checks can be disabled (for example, for performance testing)
 by passing the `-u` option.

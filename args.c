@@ -57,14 +57,23 @@ int args_parse(int argc, char** argv){
 					}
 					u++;
 					break;
+				case 'e':
+					if(!strcmp(argv[u + 1], "ignore")){
+						config.limit_handling = ignore;
+					}
+					else if(!strcmp(argv[u + 1], "disconnect")){
+						config.limit_handling = disconnect;
+					}
+					else{
+						config.limit_handling = limit;
+					}
+					u++;
+					break;
 				case 'u':
 					config.unsafe = true;
 					break;
 				case 'x':
 					config.exclusive = true;
-					break;
-				case 'n':
-					config.nice = true;
 					break;
 				case 'w':
 					config.windowed = true;

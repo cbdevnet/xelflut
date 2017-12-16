@@ -109,7 +109,7 @@ int client_process(client* client, bool recv_data){
 		.alpha = 0xFFFF
 	};
 
-	if(recv_data){
+	if(recv_data && (sizeof(client->data) - client->data_offset) > 0){
 		//read data
 		bytes = recv(client->fd, client->data + client->data_offset, sizeof(client->data) - client->data_offset, 0);
 
@@ -130,7 +130,7 @@ int client_process(client* client, bool recv_data){
 		if(!strncmp(client->data, "PX ", 3)){
 			//check pixel limit
 			if(!config.unsafe && client->submits >= config.frame_limit){
-				if(config.nice){
+				if(config.limit_handling == ignore){
 					goto line_handled;
 				}
 				break;
@@ -171,10 +171,12 @@ line_handled:
 		client->data_offset -= bytes;
 	}
 
-	//check if (spammy) overrun
-	if(sizeof(client->data) - client->data_offset < 10){
-		fprintf(stderr, "Client %zu disconnected: Limit exceeded\n", client - clients.entries);
-		return client_disconnect(client);
+	//check if client hit the limits
+	if(sizeof(client->data) - client->data_offset < 2){
+		if(config.limit_handling == disconnect || client->submits < config.frame_limit){
+			fprintf(stderr, "Client %zu disconnected: Limit exceeded\n", client - clients.entries);
+			return client_disconnect(client);
+		}
 	}
 	return 0;
 }
