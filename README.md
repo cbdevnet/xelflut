@@ -18,7 +18,7 @@ and more-or-less (probably less) great math and programming humour.
 ## Dependencies
 
 * A C compiler
-* make
+* (GNU) make
 * libx11(-dev)
 * libxrender(-dev)
 
@@ -28,9 +28,13 @@ Run `make`.
 
 ## Setup
 
-None as of yet. Just run the resulting binary.
+Configuration is done by passing arguments. See the output of `xelflut -h` to see what is possible.
+
+To install `xelflut` to the system (not in any way required), run `make install`.
 
 # Usage
+
+Just run the resulting binary.
 
 Run `./xelflut -h` for some info on what you can do.
 
