@@ -124,12 +124,6 @@ int client_process(client* client, bool recv_data){
 		}
 
 		client->data_offset += bytes;
-
-		//check if overrun
-		if(sizeof(client->data) - client->data_offset < 10){
-			fprintf(stderr, "Client %zu disconnected due to data overrun\n", client - clients.entries);
-			return client_disconnect(client);
-		}
 	}
 
 	while(client->data_offset > 3 && memchr(client->data, '\n', client->data_offset)){
@@ -171,6 +165,12 @@ int client_process(client* client, bool recv_data){
 		bytes = (char*)memchr(client->data, '\n', client->data_offset) + 1 - client->data;
 		memmove(client->data, client->data + bytes, client->data_offset - bytes);
 		client->data_offset -= bytes;
+	}
+
+	//check if (spammy) overrun
+	if(sizeof(client->data) - client->data_offset < 10){
+		fprintf(stderr, "Client %zu disconnected due to data overrun\n", client - clients.entries);
+		return client_disconnect(client);
 	}
 	return 0;
 }

@@ -8,7 +8,7 @@
 
 #define XELFLUT_VERSION "Xelflut 3.1"
 #define XELFLUT_CLASS "xelflut"
-#define DATA_BUFFER_LEN 100000
+#define DATA_BUFFER_LEN 8192
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
