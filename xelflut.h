@@ -42,6 +42,7 @@ struct /*_XELFLUT_CONF*/ {
 
 	unsigned frame_limit;
 	unsigned frame_rate;
+	unsigned pixels;
 
 	char* window_name;
 } config = {

@@ -29,10 +29,13 @@ void clients_add(fd_set* fds, int* maxfd){
 }
 
 void clients_relimit(){
-	size_t u;
+	size_t u, c;
 	for(u = 0; u < clients.length; u++){
+		c += clients.entries[u].submits;
 		clients.entries[u].submits = 0;
 	}
+
+	config.pixels += c;
 }
 
 int client_disconnect(client* disc){

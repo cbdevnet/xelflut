@@ -88,7 +88,9 @@ int main(int argc, char** argv){
 		delta_nanos = (delta_nanos < 0) ? 1e9 + delta_nanos:delta_nanos;
 		if(delta_nanos > 1e9 / config.frame_rate){
 			if(current_time.tv_sec != x11.last_render.tv_sec){
-				fprintf(stderr, "Drawing at %f fps\n", 1e9/delta_nanos);
+				fprintf(stderr, "Drawing at %f fps, %f updates per frame avg\n", 1e9/delta_nanos, (config.pixels/(1e9/delta_nanos)));
+				//reset the statistic
+				config.pixels = 0;
 			}
 			x11_redraw();
 			clients_relimit();
