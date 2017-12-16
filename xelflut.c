@@ -12,7 +12,8 @@ int usage(char* fn){
 	printf("-u\t\tUnsafe mode - disregard client checks and limits\n");
 	printf("-x\t\tOnly accept IPv4/6 clients as indicated by bindhost\n");
 	printf("-w\t\tDo not fullscreen the window\n");
-	printf("-s\t\tForce square pixels\n");
+	printf("-s\t\tForce uniform scaling (square pixels)\n");
+	printf("-c\t\tCenter the image (only useful with uniform scaling)\n");
 
 	return EXIT_FAILURE;
 }

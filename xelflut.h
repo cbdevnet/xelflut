@@ -43,7 +43,8 @@ struct /*_XELFLUT_CONF*/ {
 	unsigned width;
 	unsigned height;
 	bool windowed;
-	bool square_pixels;
+	bool scale_uniform;
+	bool centered;
 	bool unsafe;
 
 	unsigned frame_limit;
@@ -61,7 +62,8 @@ struct /*_XELFLUT_CONF*/ {
 	.width = 800,
 	.height = 600,
 	.windowed = false,
-	.square_pixels = false,
+	.scale_uniform = false,
+	.centered = false,
 	.unsafe = false,
 
 	.frame_limit = 50,

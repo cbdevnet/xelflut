@@ -141,6 +141,8 @@ void x11_handle(){
 	XEvent event;
 	char pressed_key;
 	bool reconfigured = false, exposed = false;
+	double uniform_scaling;
+
 	XTransform transform = {{
 		{XDoubleToFixed(1), XDoubleToFixed(0), XDoubleToFixed(0)},
 		{XDoubleToFixed(0), XDoubleToFixed(1), XDoubleToFixed(0)},
@@ -204,10 +206,24 @@ void x11_handle(){
 	XFlush(x11.display);
 
 	if(reconfigured){
+		uniform_scaling = min(x11.width / (double) config.width, x11.height / (double) config.height);
+		if(config.scale_uniform){
+			//update uniform transform scale
+			transform.matrix[2][2] = XDoubleToFixed(uniform_scaling);
+			//translate along unclipped axis
+			if(config.centered){
+				transform.matrix[0][2] = XDoubleToFixed((x11.width / config.width < x11.height / config.height) ? 0 : (x11.width - config.width * uniform_scaling) / -2);
+				transform.matrix[1][2] = XDoubleToFixed((x11.width / config.width > x11.height / config.height) ? 0: (x11.height - config.height * uniform_scaling) / -2);
+			}
+		}
+		else{
+			//anisotropic scaling
+			transform.matrix[0][0] = XDoubleToFixed(config.width / (double) x11.width);
+			transform.matrix[1][1] = XDoubleToFixed(config.height / (double) x11.height);
+		}
+		fprintf(stderr, "Window configured to %dx%d, uniform scaling factor %f\n", x11.width, x11.height, uniform_scaling);
 
-		//update transform scale
-		transform.matrix[2][2] = XDoubleToFixed(min(x11.width / (double) config.width, x11.height / (double) config.height));
-		fprintf(stderr, "Window configured to %dx%d, image scale %f\n", x11.width, x11.height, min(x11.width / (double) config.width, x11.height / (double) config.height));
+		//update transformation matrix
 		XRenderSetPictureTransform(x11.display, x11.canvas_handle, &transform);
 	}
 
@@ -215,8 +231,6 @@ void x11_handle(){
 		//clear window //FIXME is this even needed (ie, is the image transparent?)
 		//XClearWindow(x11.display, x11.main);
 		XRenderFillRectangle(x11.display, PictOpOver, x11.window_handle, &x11.background, 0, 0, x11.width, x11.height);
-
-		//TODO update transformation matrix
 
 		//composite pixmap onto window
 		XRenderComposite(x11.display, PictOpOver, x11.canvas_handle, None, x11.window_handle, 0, 0, 0, 0, 0, 0, x11.width, x11.height);

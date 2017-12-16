@@ -82,7 +82,10 @@ int args_parse(int argc, char** argv){
 					config.windowed = true;
 					break;
 				case 's':
-					config.square_pixels = true;
+					config.scale_uniform = true;
+					break;
+				case 'c':
+					config.centered = true;
 					break;
 				default:
 					fprintf(stderr, "Unknown option: %s\n", argv[u]);
