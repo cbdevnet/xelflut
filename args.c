@@ -57,6 +57,9 @@ int args_parse(int argc, char** argv){
 					}
 					u++;
 					break;
+				case 'u':
+					config.unsafe = true;
+					break;
 				case 'x':
 					config.exclusive = true;
 					break;

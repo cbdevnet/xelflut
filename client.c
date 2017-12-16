@@ -53,7 +53,7 @@ int client_accept(int listen_fd){
 	client empty_client = {
 		.fd = -1
 	};
-	
+
 	for(position = 0; position < clients.length; position++){
 		if(clients.entries[position].fd < 0){
 			break;
@@ -79,13 +79,15 @@ int client_accept(int listen_fd){
 	}
 
 	fprintf(stderr, "Client in slot %zu\n", position);
-	
-	//check for multiple connections
-	for(u = 0; u < clients.length; u++){
-		if(u != position && clients.entries[u].fd >= 0 && client_same(clients.entries + position, clients.entries + u)){
-			fprintf(stderr, "Disconnecting duplicate client\n");
-			client_disconnect(clients.entries + position);
-			return -1;
+
+	if(!config.unsafe){
+		//check for multiple connections
+		for(u = 0; u < clients.length; u++){
+			if(u != position && clients.entries[u].fd >= 0 && client_same(clients.entries + position, clients.entries + u)){
+				fprintf(stderr, "Disconnecting duplicate client\n");
+				client_disconnect(clients.entries + position);
+				return -1;
+			}
 		}
 	}
 	return 0;
@@ -130,7 +132,7 @@ int client_process(client* client, bool recv_data){
 	while(client->data_offset > 3 && memchr(client->data, '\n', client->data_offset)){
 		if(!strncmp(client->data, "PX ", 3)){
 			//check pixel limit
-			if(client->submits >= config.frame_limit){
+			if(!config.unsafe && client->submits >= config.frame_limit){
 				break;
 			}
 			//draw pixel

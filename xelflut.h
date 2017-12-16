@@ -8,7 +8,7 @@
 
 #define XELFLUT_VERSION "Xelflut 3.1"
 #define XELFLUT_CLASS "xelflut"
-#define DATA_BUFFER_LEN 8192
+#define DATA_BUFFER_LEN 100000
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -38,6 +38,7 @@ struct /*_XELFLUT_CONF*/ {
 	unsigned height;
 	bool windowed;
 	bool square_pixels;
+	bool unsafe;
 
 	unsigned frame_limit;
 	unsigned frame_rate;
@@ -52,6 +53,7 @@ struct /*_XELFLUT_CONF*/ {
 	.height = 600,
 	.windowed = false,
 	.square_pixels = false,
+	.unsafe = false,
 
 	.frame_limit = 50,
 	.frame_rate = 25,
