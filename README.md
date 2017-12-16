@@ -13,6 +13,13 @@ Version numbers approximate &pi;.
 It's funny on so many levels, some of which come only with an understanding of the german language
 and more-or-less (probably less) great math and programming humour.
 
+## Features
+
+* IPv4 + IPv6 support
+* Configurable frame rates and limits
+* Few dependencies / lightweight
+* Slim codebase (~900 LoC)
+
 # Building & Setup
 
 ## Dependencies
@@ -28,7 +35,7 @@ Run `make`.
 
 ## Setup
 
-Configuration is done by passing arguments. See the output of `xelflut -h` to see what is possible.
+Configuration is done by passing arguments. Check the output of `xelflut -h` to see what is possible.
 
 To install `xelflut` to the system (not in any way required), run `make install`.
 
@@ -40,10 +47,17 @@ Run `./xelflut -h` for some info on what you can do.
 
 Within the window, press `q` to quit or `c` to clear the canvas.
 
+By default, clients are limited to 50 pixels per frame (to change this, use the `-l` argument),
+25 frames are rendered every second (configurable with `-f`). Clients exceeding the limits will
+be disconnected, which may be changed to just ignoring additional pixels via the `-n` option.
+Clients are allowed only one connection per host (though this can be circumvented by reasonably
+clever attackers). All limits and checks can be disabled (for example, for performance testing)
+by passing the `-u` option.
+
 # Protocol
 
 Lines of ASCII text commands separated by `\n` via TCP on port `3141`, unless you
-configure it differently.
+configure it differently (arguments `-b` and `-p`).
 
 
 Send `SIZE` and the server responds with `SIZE WIDTH HEIGHT`
