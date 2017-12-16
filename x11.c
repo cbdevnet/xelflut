@@ -225,13 +225,11 @@ void x11_handle(){
 
 		//update transformation matrix
 		XRenderSetPictureTransform(x11.display, x11.canvas_handle, &transform);
+		//clear the window
+		XRenderFillRectangle(x11.display, PictOpOver, x11.window_handle, &x11.background, 0, 0, x11.width, x11.height);
 	}
 
 	if(exposed){
-		//clear window //FIXME is this even needed (ie, is the image transparent?)
-		//XClearWindow(x11.display, x11.main);
-		XRenderFillRectangle(x11.display, PictOpOver, x11.window_handle, &x11.background, 0, 0, x11.width, x11.height);
-
 		//composite pixmap onto window
 		XRenderComposite(x11.display, PictOpOver, x11.canvas_handle, None, x11.window_handle, 0, 0, 0, 0, 0, 0, x11.width, x11.height);
 	}
