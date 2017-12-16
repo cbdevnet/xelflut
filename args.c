@@ -63,6 +63,9 @@ int args_parse(int argc, char** argv){
 				case 'x':
 					config.exclusive = true;
 					break;
+				case 'n':
+					config.nice = true;
+					break;
 				case 'w':
 					config.windowed = true;
 					break;

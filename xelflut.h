@@ -39,6 +39,7 @@ struct /*_XELFLUT_CONF*/ {
 	bool windowed;
 	bool square_pixels;
 	bool unsafe;
+	bool nice; 
 
 	unsigned frame_limit;
 	unsigned frame_rate;
@@ -55,6 +56,7 @@ struct /*_XELFLUT_CONF*/ {
 	.windowed = false,
 	.square_pixels = false,
 	.unsafe = false,
+	.nice = false,
 
 	.frame_limit = 50,
 	.frame_rate = 25,

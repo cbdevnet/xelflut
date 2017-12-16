@@ -9,6 +9,7 @@ int usage(char* fn){
 	printf("-f <framerate>\tMaximum framerate (Default 25)\n");
 	printf("-d <width>x<height>\tThe canvas size (Default 800x600)\n");
 	printf("-u\t\tUnsafe mode - disregard client checks and limits\n");
+	printf("-n\t\tBe nice and ignore clients exceeding their limits (instead of disconnecting)\n");
 	printf("-x\t\tOnly accept IPv4/6 clients as indicated by bindhost\n");
 	printf("-w\t\tDo not fullscreen the window\n");
 	printf("-s\t\tForce square pixels\n");

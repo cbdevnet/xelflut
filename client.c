@@ -130,6 +130,9 @@ int client_process(client* client, bool recv_data){
 		if(!strncmp(client->data, "PX ", 3)){
 			//check pixel limit
 			if(!config.unsafe && client->submits >= config.frame_limit){
+				if(config.nice){
+					goto line_handled;
+				}
 				break;
 			}
 			//draw pixel
@@ -160,6 +163,7 @@ int client_process(client* client, bool recv_data){
 			//unsafe send, but hey
 			send(client->fd, send_buffer, bytes, 0);
 		}
+line_handled:
 
 		//remove sentence
 		bytes = (char*)memchr(client->data, '\n', client->data_offset) + 1 - client->data;
@@ -169,7 +173,7 @@ int client_process(client* client, bool recv_data){
 
 	//check if (spammy) overrun
 	if(sizeof(client->data) - client->data_offset < 10){
-		fprintf(stderr, "Client %zu disconnected due to data overrun\n", client - clients.entries);
+		fprintf(stderr, "Client %zu disconnected: Limit exceeded\n", client - clients.entries);
 		return client_disconnect(client);
 	}
 	return 0;
