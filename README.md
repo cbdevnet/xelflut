@@ -17,6 +17,8 @@ and more-or-less (probably less) great math and programming humour.
 
 * IPv4 + IPv6 support
 * Configurable frame rates and limits
+* Configurable canvas dimensions
+* Uniform or anisotropic scaling and centering
 * Few dependencies / lightweight
 * Slim codebase (~900 LoC)
 
