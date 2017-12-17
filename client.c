@@ -47,7 +47,9 @@ int client_disconnect(client* disc){
 	close(disc->fd);
 	*disc = empty_client;
 
-	fprintf(stderr, "Disconnected client in slot %zi\n", disc - clients.entries);
+	if(!config.quiet){
+		fprintf(stderr, "Disconnected client in slot %zi\n", disc - clients.entries);
+	}
 	return 0;
 }
 
@@ -83,7 +85,9 @@ int client_accept(int listen_fd){
 		return -1;
 	}
 
-	fprintf(stderr, "Client in slot %zu\n", position);
+	if(!config.quiet){
+		fprintf(stderr, "Client in slot %zu\n", position);
+	}
 
 	if(!config.unsafe){
 		//check for multiple connections

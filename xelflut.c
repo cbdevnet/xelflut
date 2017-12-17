@@ -14,6 +14,7 @@ int usage(char* fn){
 	printf("-w\t\tDo not fullscreen the window\n");
 	printf("-s\t\tForce uniform scaling (square pixels)\n");
 	printf("-c\t\tCenter the image (only useful with uniform scaling)\n");
+	printf("-q\t\tQuiet mode (suppress status output)\n");
 
 	return EXIT_FAILURE;
 }
@@ -90,7 +91,9 @@ int main(int argc, char** argv){
 		delta_nanos = (delta_nanos < 0) ? 1e9 + delta_nanos:delta_nanos;
 		if(delta_nanos > 1e9 / config.frame_rate){
 			if(current_time.tv_sec != x11.last_render.tv_sec){
-				fprintf(stderr, "Drawing at %f fps, %f updates per frame from %u clients\n", 1e9/delta_nanos, (config.pixels/(1e9/delta_nanos)), config.clients);
+				if(!config.quiet){
+					fprintf(stderr, "Drawing at %f fps, %f updates per frame from %u clients\n", 1e9/delta_nanos, (config.pixels/(1e9/delta_nanos)), config.clients);
+				}
 				//reset the statistic
 				config.pixels = 0;
 			}

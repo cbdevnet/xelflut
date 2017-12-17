@@ -87,6 +87,9 @@ int args_parse(int argc, char** argv){
 				case 'c':
 					config.centered = true;
 					break;
+				case 'q':
+					config.quiet = true;
+					break;
 				default:
 					fprintf(stderr, "Unknown option: %s\n", argv[u]);
 					return -1;

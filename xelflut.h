@@ -46,6 +46,7 @@ struct /*_XELFLUT_CONF*/ {
 	bool scale_uniform;
 	bool centered;
 	bool unsafe;
+	bool quiet;
 
 	unsigned frame_limit;
 	unsigned frame_rate;
@@ -65,6 +66,7 @@ struct /*_XELFLUT_CONF*/ {
 	.scale_uniform = false,
 	.centered = false,
 	.unsafe = false,
+	.quiet = false,
 
 	.frame_limit = 50,
 	.frame_rate = 25,
