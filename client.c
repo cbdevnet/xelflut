@@ -29,7 +29,7 @@ void clients_add(fd_set* fds, int* maxfd){
 }
 
 void clients_relimit(){
-	size_t u, c;
+	size_t u, c = 0;
 	for(u = 0; u < clients.length; u++){
 		c += clients.entries[u].submits;
 		clients.entries[u].submits = 0;
@@ -103,11 +103,11 @@ int client_accept(int listen_fd){
 }
 
 int client_process(client* client, bool recv_data){
-	ssize_t bytes;
+	ssize_t bytes = 0;
 	char send_buffer[DATA_BUFFER_LEN];
-	unsigned pixel_x, pixel_y;
-	char pixel_raw[10];
-	char* offset = NULL;
+	unsigned pixel_x = 0, pixel_y = 0;
+	char pixel_raw[10] = "";
+	char* offset = NULL, *base = client->data;
 	XRenderColor pixel_color = {
 		.red = 0x0000,
 		.green = 0xFF00,
@@ -132,8 +132,8 @@ int client_process(client* client, bool recv_data){
 		client->data_offset += bytes;
 	}
 
-	while(client->data_offset > 3 && memchr(client->data, '\n', client->data_offset)){
-		if(!strncmp(client->data, "PX ", 3)){
+	while(memchr(base, '\n', client->data_offset)){
+		if(!strncmp(base, "PX ", 3)){
 			//check pixel limit
 			if(config.limit_handling != none && !config.unsafe && client->submits >= config.frame_limit){
 				if(config.limit_handling == ignore){
@@ -143,7 +143,7 @@ int client_process(client* client, bool recv_data){
 			}
 			//draw pixel
 			//cant use strtok here to separate arguments because the separator needs to be kept
-			offset = client->data + 3;
+			offset = base + 3;
 			pixel_x = strtoul(offset, &offset, 0);
 
 			if(*offset == ' '){
@@ -163,7 +163,7 @@ int client_process(client* client, bool recv_data){
 
 			client->submits++;
 		}
-		else if(!strncmp(client->data, "SIZE", 4)){
+		else if(!strncmp(base, "SIZE", 4)){
 			//slight deviation from original protocol, terminate size response with \n
 			bytes = snprintf(send_buffer, sizeof(send_buffer), "SIZE %d %d\n", config.width, config.height);
 			//unsafe send, but hey
@@ -171,11 +171,12 @@ int client_process(client* client, bool recv_data){
 		}
 line_handled:
 
-		//remove sentence
-		bytes = (char*)memchr(client->data, '\n', client->data_offset) + 1 - client->data;
-		memmove(client->data, client->data + bytes, client->data_offset - bytes);
+		//skip to next sentence
+		bytes = (char*)memchr(base, '\n', client->data_offset) + 1 - base;
 		client->data_offset -= bytes;
+		base += bytes;
 	}
+	memmove(client->data, base, client->data_offset);
 
 	//check if client hit the limits
 	if(sizeof(client->data) - client->data_offset < 2){
@@ -195,6 +196,9 @@ void clients_cleanup(){
 			clients.entries[u].fd = -1;
 		}
 	}
+
+	free(clients.entries);
+	clients.length = 0;
 }
 
 int clients_handle(fd_set* fds){

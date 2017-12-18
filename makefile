@@ -13,7 +13,7 @@ xelflut: $(SOURCES) $(HEADERS)
 	$(CC) $(CFLAGS) $< $(LDLIBS) -o $@
 
 run:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./xelflut
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./xelflut -u
 
 clean:
 	$(RM) xelflut
