@@ -130,10 +130,7 @@ int x11_init(){
 }
 
 void x11_redraw(){
-	XEvent event = {
-		.type = Expose
-	};
-	XSendEvent(x11.display, x11.main, False, 0, &event);
+	XRenderComposite(x11.display, PictOpSrc, x11.canvas_handle, None, x11.window_handle, 0, 0, 0, 0, 0, 0, x11.width, x11.height);
 	XFlush(x11.display);
 }
 
@@ -203,8 +200,6 @@ void x11_handle(){
 		}
 	}
 
-	XFlush(x11.display);
-
 	if(reconfigured){
 		uniform_scaling = min(x11.width / (double) config.width, x11.height / (double) config.height);
 		if(config.scale_uniform){
@@ -233,6 +228,8 @@ void x11_handle(){
 		//composite pixmap onto window
 		XRenderComposite(x11.display, PictOpSrc, x11.canvas_handle, None, x11.window_handle, 0, 0, 0, 0, 0, 0, x11.width, x11.height);
 	}
+
+	XFlush(x11.display);
 }
 
 void x11_cleanup(){
