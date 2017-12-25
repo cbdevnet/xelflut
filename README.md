@@ -21,6 +21,7 @@ and more-or-less (probably less) great math and programming humour.
 * Uniform or anisotropic scaling and centering
 * Few dependencies / lightweight
 * Slim codebase (~900 LoC)
+* Alpha-transparency support
 
 # Building & Setup
 
