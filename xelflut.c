@@ -46,9 +46,13 @@ int main(int argc, char** argv){
 	}
 
 	//create window
-	x11_init();
-	//flush events
-	x11_handle();
+	if(x11_init()){
+		abort_signaled = 1;
+	}
+	else{
+		//handle initial events
+		x11_handle();
+	}
 
 	//wait for events
 	while(!abort_signaled){
